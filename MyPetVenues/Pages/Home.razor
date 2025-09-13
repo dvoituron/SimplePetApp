@@ -1,7 +1,129 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@using Microsoft.JSInterop
 
-<h1>Hello, world!</h1>
+<PageTitle>Welcome — MyPetVenues</PageTitle>
 
-Welcome to your new app.
+<div class="lp-root" data-theme="light">
+	<header class="lp-header">
+		<div class="lp-brand">
+			<img src="/icon-192.png" alt="logo" />
+			<h1>MyPetVenues <span class="emoji">🐾</span></h1>
+		</div>
+
+		<nav class="lp-nav">
+			<a href="#features">Features</a>
+			<a href="#pets">Pets</a>
+			<a href="#venues">Venues</a>
+			<a href="#about">About</a>
+		</nav>
+
+		<div class="lp-actions">
+			<button class="btn ghost" @onclick="ToggleTheme" id="themeToggle">🌙</button>
+			<a class="btn primary" href="#pets">Get Started</a>
+		</div>
+	</header>
+
+	<main class="lp-main">
+		<section class="hero">
+			<div class="hero-content">
+				<h2>Find the best places for your pet — fast, friendly, and local ✨</h2>
+				<p>Discover parks, hotels, cafes, and stores that welcome your furry friends. Browse photos, read reviews, and save favorites.</p>
+				<div class="hero-ctas">
+					<a class="btn primary large" href="#pets">Browse Pets</a>
+					<a class="btn outline large" href="#venues">Explore Venues</a>
+				</div>
+				<ul class="hero-features">
+					<li>Curated venues ❤️</li>
+					<li>Real photos and reviews 📸</li>
+					<li>Save favorites ⭐</li>
+				</ul>
+			</div>
+			<div class="hero-images" aria-hidden="true">
+				<img src="/images/pets/dog1.png" alt="happy dog" />
+				<img src="/images/venues/park1.jpg" alt="park" />
+			</div>
+		</section>
+
+		<section id="features" class="features">
+			<h3>Key features</h3>
+			<div class="features-grid">
+				<article class="feature-card">
+					<h4>Map-powered search 🔎</h4>
+					<p>Locate pet-friendly spots near you with filters for type, distance, and amenities.</p>
+				</article>
+
+				<article class="feature-card">
+					<h4>Photo galleries 📷</h4>
+					<p>Real images from other pet owners so you can see before you go.</p>
+				</article>
+
+				<article class="feature-card">
+					<h4>Save & share ❤️</h4>
+					<p>Save favorites and share them with friends or other pet owners.</p>
+				</article>
+
+				<article class="feature-card">
+					<h4>Community reviews 🗣️</h4>
+					<p>Honest feedback from fellow pet parents to help you choose the best options.</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="pets" class="gallery">
+			<h3>Pet gallery</h3>
+			<div class="gallery-grid">
+				<img src="/images/pets/dog1.png" alt="dog" />
+				<img src="/images/pets/dog4.png" alt="dog" />
+				<img src="/images/pets/dog5.jpg" alt="dog" />
+				<img src="/images/pets/dog6.png" alt="dog" />
+				<img src="/images/pets/cat1.jpg" alt="cat" />
+				<img src="/images/pets/bunny.jpg" alt="bunny" />
+			</div>
+		</section>
+
+		<section id="venues" class="gallery venues-gallery">
+			<h3>Venue highlights</h3>
+			<div class="gallery-grid">
+				<img src="/images/venues/park1.jpg" alt="park" />
+				<img src="/images/venues/cafe1.jpg" alt="cafe" />
+				<img src="/images/venues/hotel1.jpg" alt="hotel" />
+				<img src="/images/venues/store1.jpg" alt="store" />
+				<img src="/images/venues/home1.jpg" alt="home" />
+				<img src="/images/venues/moochs1.jpg" alt="venue" />
+			</div>
+		</section>
+
+		<section id="about" class="about">
+			<h3>About MyPetVenues</h3>
+			<p>Built with love for pets and their people. We curate pet-friendly spots and provide a delightful, image-forward experience to plan your next outing.</p>
+			<p class="small">Have suggestions? Open a PR or file an issue on the repo.</p>
+		</section>
+	</main>
+
+	<footer class="lp-footer">
+		<div>
+			<strong>MyPetVenues</strong> — Helping pets and people connect.
+		</div>
+		<nav>
+			<a href="#">Terms</a>
+			<a href="#">Privacy</a>
+			<a href="#">Contact</a>
+		</nav>
+		<div class="copyright">© @DateTime.Now.Year MyPetVenues</div>
+	</footer>
+</div>
+
+@code {
+	[Inject]
+	public IJSRuntime JS { get; set; } = default!;
+
+	private async Task ToggleTheme()
+	{
+		try
+		{
+			await JS.InvokeVoidAsync("myPet.toggleTheme");
+		}
+		catch { /* ignore for static preview scenarios */ }
+	}
+}
