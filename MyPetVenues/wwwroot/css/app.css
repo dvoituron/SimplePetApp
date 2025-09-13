@@ -86,3 +86,94 @@ code {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/* Landing page styles (MyPetVenues) */
+:root{
+    --bg: #0f0b0f;
+    --card: #121016;
+    --text: #efeaf0;
+    --muted: #cfcbd6;
+    --pink-1: #ff5fa2;
+    --pink-2: #ff2d7a;
+    --accent: linear-gradient(135deg,var(--pink-1),var(--pink-2));
+}
+
+.lp-root[data-theme="light"]{
+    --bg: #fff8fb;
+    --card: #ffffff;
+    --muted: #5b5563;
+    --text: #111317;
+}
+
+/* Apply theme colors to the landing root so toggling updates background/text */
+.lp-root{
+    min-height:100vh;
+    background:var(--bg);
+    color:var(--text);
+    transition:background .28s ease, color .28s ease;
+}
+
+.lp-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:1rem 2rem;
+    backdrop-filter: blur(6px);
+    background: linear-gradient(90deg, rgba(255,95,162,0.06), rgba(255,45,122,0.04));
+    position:sticky;
+    top:0;
+    z-index:40;
+}
+
+.lp-brand{display:flex;align-items:center;gap:.75rem}
+.lp-brand img{width:40px;height:40px;border-radius:8px}
+.lp-brand h1{font-size:1.125rem;margin:0}
+.lp-brand .emoji{font-size:1.1rem;margin-left:.25rem}
+
+.lp-nav{display:flex;gap:1rem}
+.lp-nav a{color:var(--muted);text-decoration:none;padding:.4rem .6rem;border-radius:.5rem;transition:all .18s}
+.lp-nav a:hover{background:rgba(255,95,162,0.08);color:var(--pink-2);transform:translateY(-2px)}
+
+.lp-actions{display:flex;align-items:center;gap:.5rem}
+.btn{font-weight:600;border:0;padding:.5rem .85rem;border-radius:.6rem;cursor:pointer}
+.btn.ghost{background:transparent}
+.btn.primary{background:var(--accent);color:white;box-shadow:0 6px 20px rgba(255,45,122,0.16)}
+.btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+.btn.large{padding:.8rem 1.2rem;font-size:1rem}
+
+.lp-main{padding:2rem}
+.hero{display:grid;grid-template-columns:1fr 480px;gap:2rem;align-items:center;padding:2rem;border-radius:12px;background:linear-gradient(180deg, rgba(255,95,162,0.06), rgba(255,45,122,0.03));}
+.hero-content h2{font-size:2rem;margin:0 0 .6rem}
+.hero-content p{color:var(--muted);margin:0 0 1rem}
+.hero-ctas{display:flex;gap:.75rem;margin-bottom:1rem}
+.hero-features{display:flex;gap:1rem;list-style:none;padding:0;margin:0;color:var(--muted)}
+.hero-images{display:flex;gap:0.5rem;justify-content:center}
+.hero-images img{width:220px;border-radius:12px;object-fit:cover;box-shadow:0 8px 30px rgba(4,4,8,0.45);transform:translateY(0);transition:transform .28s,filter .28s}
+.hero-images img:hover{transform:translateY(-6px);filter:brightness(1.05)}
+
+.features{padding:2rem 0}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+.feature-card{background:var(--card);padding:1rem;border-radius:12px;box-shadow:0 6px 20px rgba(12,8,12,0.5);transition:transform .18s}
+.feature-card:hover{transform:translateY(-6px)}
+.feature-card h4{margin:0 0 .5rem}
+
+.gallery{padding:2rem 0}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.6rem}
+.gallery-grid img{width:100%;height:140px;object-fit:cover;border-radius:10px;transition:transform .18s,box-shadow .18s}
+.gallery-grid img:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(0,0,0,0.45)}
+
+.about{padding:2rem 0;color:var(--muted)}
+
+.lp-footer{display:flex;gap:1rem;justify-content:space-between;align-items:center;padding:1.25rem 2rem;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
+@media (max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .hero-images img{width:160px;height:120px}
+    .lp-nav{display:none}
+}
+
+/* small accessibility tweaks */
+.btn:focus{outline:3px solid rgba(255,95,162,0.18);outline-offset:3px}
+
+/* JS hooks: myPet.toggleTheme will swap data-theme on root */
