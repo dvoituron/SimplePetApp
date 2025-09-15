@@ -1,7 +1,125 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
 
-<h1>Hello, world!</h1>
+<PageTitle>Welcome • MyPetVenues</PageTitle>
 
-Welcome to your new app.
+<div class="landing-root" id="landingRoot">
+	<header class="landing-header">
+		<div class="brand">
+			<img src="/images/pets/dog1.png" alt="logo" class="logo" />
+			<h1>MyPetVenues <span class="emoji">🐾</span></h1>
+		</div>
+
+		<nav class="nav">
+			<a href="#features">Features</a>
+			<a href="#gallery">Gallery</a>
+			<a href="#contact">Contact</a>
+			<button class="theme-toggle" @onclick="ToggleTheme" aria-label="Toggle theme">🌙</button>
+		</nav>
+	</header>
+
+	<section class="hero">
+		<div class="hero-content">
+			<h2>Find the perfect places for your pet — fast, friendly, and fun! <span class="emoji">✨</span></h2>
+			<p>Discover vetted parks, pet-friendly cafes, hotels, and local businesses. Browse photos, reviews, and book visits — all in one place.</p>
+			<div class="hero-actions">
+				<a class="btn primary" href="#features">Explore Features</a>
+				<a class="btn outline" href="#gallery">View Gallery</a>
+			</div>
+		</div>
+
+		<div class="hero-images" aria-hidden="true">
+			<img src="/images/pets/dog7.jpg" alt="happy dog" />
+			<img src="/images/venues/cafe1.jpg" alt="pet friendly cafe" />
+		</div>
+	</section>
+
+	<section id="features" class="features">
+		<h3>Key Features <span class="emoji">🚀</span></h3>
+		<div class="feature-grid">
+			<div class="feature">
+				<div class="icon">📍</div>
+				<h4>Découvrir des lieux</h4>
+				<p>Recherchez des établissements acceptant les animaux près de chez vous, avec des filtres par type, distance et équipements.</p>
+			</div>
+
+			<div class="feature">
+				<div class="icon">🖼️</div>
+				<h4>Photo Galleries</h4>
+				<p>Browse user-uploaded photos of pets and venues so you know what to expect.</p>
+			</div>
+
+			<div class="feature">
+				<div class="icon">⭐</div>
+				<h4>Reviews & Ratings</h4>
+				<p>Read honest reviews from other pet owners and share your experiences.</p>
+			</div>
+
+			<div class="feature">
+				<div class="icon">🔔</div>
+				<h4>Notifications</h4>
+				<p>Get alerts for new venues, events, and deals in your area.</p>
+			</div>
+		</div>
+	</section>
+
+	<section id="gallery" class="gallery">
+		<h3>Gallery <span class="emoji">📸</span></h3>
+		<div class="gallery-grid">
+			<img src="/images/pets/dog3.jpg" alt="dog" />
+			<img src="/images/pets/cat1.jpg" alt="cat" />
+			<img src="/images/venues/park1.jpg" alt="park" />
+			<img src="/images/pets/bunny.jpg" alt="bunny" />
+			<img src="/images/venues/hotel1.jpg" alt="hotel" />
+			<img src="/images/pets/dog5.jpg" alt="dog" />
+		</div>
+	</section>
+
+	<section id="contact" class="contact">
+		<div class="contact-inner">
+			<h3>Join our community <span class="emoji">🤝</span></h3>
+			<p>Sign up for tips, featured venues, and exclusive pet-owner events.</p>
+			<div class="newsletter">
+				<input placeholder="Enter your email" type="email" />
+				<button class="btn primary">Subscribe</button>
+			</div>
+		</div>
+	</section>
+
+	<footer class="landing-footer">
+		<div class="footer-inner">
+			<div>© @(DateTime.Now.Year) MyPetVenues — Built with 💜 for pets</div>
+			<div class="footer-links">
+				<a href="#">Privacy</a>
+				<a href="#">Terms</a>
+				<a href="#">Contact</a>
+			</div>
+		</div>
+	</footer>
+</div>
+
+@code {
+	private bool isDark = true;
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await ApplyTheme();
+		}
+	}
+
+	private async Task ToggleTheme()
+	{
+		isDark = !isDark;
+		await ApplyTheme();
+	}
+
+	private ValueTask<object> ApplyTheme()
+	{
+		var theme = isDark ? "dark" : "light";
+		return JS.InvokeAsync<object>("document.documentElement.setAttribute", "data-theme", theme);
+	}
+}
